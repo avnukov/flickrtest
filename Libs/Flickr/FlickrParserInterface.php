@@ -1,6 +1,6 @@
 <?php
 namespace Libs\Flickr;
 
-interface AdapterInterface {
+interface FlickrParserInterface {
     public function parse($string, $assoc = true);
 }
