@@ -1,7 +1,10 @@
 <?php
 namespace Libs\Flickr;
 
-abstract class FlickrAbstract {
+interface FlickrInterface {
 
-    protected abstract function setMethod()
+    public function setMethod($methodName);
+    public function addParam($name, $value);
+    public function getResponse(Array $params);
+
 }

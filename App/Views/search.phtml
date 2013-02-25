@@ -3,3 +3,10 @@
     <input type="submit" value="submit" />
 </form>
 
+<?php if (isset($searchResults)): ?>
+    <?php if (isset($searchResults['stat']) && $searchResults['stat'] == 'ok'): ?>
+        <?php foreach ($searchResults['photos']['photo'] as $photo): ?>
+            <a target="_blank" href="http://www.flickr.com/photos/<?=$photo['owner']?>/<?=$photo['id']?>/"><img src="http://farm<?=$photo['farm']?>.staticflickr.com/<?=$photo['server']?>/<?=$photo['id']?>_<?=$photo['secret']?>_t.jpg" /></a>
+        <?php endforeach; ?>
+    <?php endif;?>
+<?php endif; ?>
