@@ -64,5 +64,11 @@ $front->addAction('/search', function() use ($front, $flickrConfig){
     echo $view->render();
 });
 
+$front->setNotFoundAction(function() use ($front){
+    $view = new Libs\View('notfound');
+
+    echo $view->render();
+});
+
 // run front controller
 $front->run();
