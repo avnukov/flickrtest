@@ -1,5 +1,5 @@
 <form>
-    <input type="text" name="text" value="<?=$text?>" />
+    <input type="text" name="text" value="<?=$text;?>" />
     <input type="submit" value="submit" />
 </form>
 
@@ -8,6 +8,10 @@
         <?php foreach ($searchResults['photos']['photo'] as $photo): ?>
             <a target="_blank" href="http://www.flickr.com/photos/<?=$photo['owner']?>/<?=$photo['id']?>/"><img src="http://farm<?=$photo['farm']?>.staticflickr.com/<?=$photo['server']?>/<?=$photo['id']?>_<?=$photo['secret']?>_t.jpg" /></a>
         <?php endforeach; ?>
+
+        <br />
+
+        Page <?=$searchResults['photos']['page']?> of <?=$searchResults['photos']['pages']?>
 
         <br />
 
@@ -39,5 +43,9 @@
             <?php endif; ?>
 
         <?php endif; ?>
+
+        <br />
+
+        Total found: <?=$searchResults['photos']['total']?>
     <?php endif;?>
 <?php endif; ?>

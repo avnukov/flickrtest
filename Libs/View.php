@@ -1,17 +1,40 @@
 <?php
 namespace Libs;
-
+/**
+ * Class View
+ * @package Libs
+ */
 class View {
+    /**
+     * @var string Path to templates directory
+     */
     private $templatesPath = null;
+    /**
+     * @var string Name of current template
+     */
     private $templateName = null;
-
+    /**
+     * @var string Default extensions for views files
+     */
     private $templateExtension = '.phtml';
 
-    private $layoutFile = null;
+    /**
+     * @var string Name of layout view file
+     */
+    private $layoutName = null;
+    /**
+     * @var bool View can be rendered without layout
+     */
     private $layoutEnabled = true;
 
+    /**
+     * @var stdClass Internal storage for view variables
+     */
     private $data = null;
 
+    /**
+     * @param null|string $templateName
+     */
     public function __construct($templateName = null) {
         // set default templates path
         $this->setTemplatesPath('Views');
@@ -19,68 +42,81 @@ class View {
 		// set default layout name
 		$this->setLayoutName('layout');
 
+        // define default view data as empty stdClass
 		$this->data = new \stdClass();
 
-
-		if ($templateName !== null) {
+		// view name could be defined later
+        if ($templateName !== null) {
 			$this->templateName = $templateName;
 		}
-
-		return $this;
     }
 
+    /**
+     * @param $path string
+     */
     public function setTemplatesPath($path) {
         $this->templatesPath = APP_PATH . DIRECTORY_SEPARATOR . $path;
-
-		return $this;
     }
 
+    /**
+     * @param $name string
+     */
     public function setLayoutName($name) {
         $this->layoutName = $name;
-
-		return $this;
     }
 
     public function enableLayout() {
         $this->layoutEnabled = true;
-
-		return $this;
     }
 
     public function disableLayout() {
         $this->layoutEnabled = false;
-
-		return $this;
     }
 
+    /**
+     * @param $key string
+     * @param $value mixed
+     */
     public function assign($key, $value) {
         $this->data->$key = $value;
-
-		return $this;
     }
 
+    /**
+     * Capture output from the view
+     *
+     * @param null|string $fileName
+     * @return bool|string
+     */
     public function capture ($fileName = null) {
-		if ($fileName === null) {
+        if ($fileName === null) {
 			$fileName = $this->templateName;
 		}
 
-		$templatePath = $this->templatesPath . DIRECTORY_SEPARATOR . $fileName . $this->templateExtension;
+		// found full view path
+        $templatePath = $this->templatesPath . DIRECTORY_SEPARATOR . $fileName . $this->templateExtension;
 
-		if (!file_exists($templatePath)) {
+		// if view wasn't found return false
+        if (!file_exists($templatePath)) {
 			return false;
 		}
 
-		extract(get_object_vars($this->data));
+		// define variables from $this->data to current scope and render view with them
+        extract(get_object_vars($this->data));
 		ob_start();
 		require $templatePath;
 
 		return ob_get_clean();
 	}
 
-	public function render($layoutEnabled = true) {
+    /**
+     * Render view with or without layout
+     *
+     * @return string
+     */
+    public function render() {
         $content = $this->capture();
-		if ($layoutEnabled === false) {
-			return $layoutEnabled;
+		if ($this->layoutEnabled === false) {
+			return $content;
 		} else {
 			$this->data->content = $content;
 

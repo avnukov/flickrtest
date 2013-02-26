@@ -1,6 +1,11 @@
 <?php
 namespace Libs;
-
+/**
+ * Simple namespaces based autoloader
+ *
+ * Class Autoloader
+ * @package Libs
+ */
 class Autoloader
 {
     public static function load($className) {

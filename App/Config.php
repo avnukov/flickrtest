@@ -1,4 +1,5 @@
 <?php
+// Config for current application
 return [
     'flickr' => [
         'apiKey'     => 'a84ac19fa8cec67ac25da03d7feab130',
