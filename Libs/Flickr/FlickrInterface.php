@@ -5,6 +5,6 @@ interface FlickrInterface {
 
     public function setMethod($methodName);
     public function addParam($name, $value);
-    public function getResponse(Array $params);
+    public function getResponse(array $params);
 
 }

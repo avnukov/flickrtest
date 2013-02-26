@@ -45,4 +45,8 @@ class Request {
 
     }
 
+    public function filter() {
+
+    }
+
 }
